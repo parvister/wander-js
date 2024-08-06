@@ -46,11 +46,32 @@ let person = {
     jump: function(count) {
         console.log(`hi my name is ${this.name} and I jump ${count} times!`);
     }
-}
+};
 
 person.sayHi();
 person.jump(5);
 person.name = 'Mahsa';
 person.sayHi();
 
+/* exercise */
+
+let adder = (x, y) => {
+    return x + y;
+}
+
+console.log(adder(10, 35));
+
+for (i = 1; i < 11; i++) {
+    console.log(`i = ${i}`);
+}
+
+let book = {
+    title: 'Alice in Wonderland',
+    pages: 143,
+    summary: function() {
+        return `${this.title} is this book with ${this.pages} pages!`
+    }
+}
+
+console.log(book.summary())
 
