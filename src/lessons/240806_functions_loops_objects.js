@@ -75,3 +75,15 @@ let book = {
 
 console.log(book.summary())
 
+// practice more arrow functions
+
+/**
+ * returns the power two of a number.
+ * @param {number} n number to raise to the power of two.
+ * @returns power of two of the number.
+ */
+let square = (n) => {
+    return n ** 2;
+};
+
+console.log(square(12));
