@@ -132,12 +132,60 @@ function shipOrder(orderId) {
     });
 }
 
-placeOrder({ orderId: 123 })
-    .then(orderId => processPayment(orderId))
-    .then(orderId => shipOrder(orderId))
-    .then(message => {
-        console.log(message); // Outputs: Order complete
-    })
-    .catch(error => {
-        console.error('Error:', error);
+// placeOrder({ orderId: 123 })
+//     .then(orderId => processPayment(orderId))
+//     .then(orderId => shipOrder(orderId))
+//     .then(message => {
+//         console.log(message); // Outputs: Order complete
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//     });
+
+
+/**
+ * practicing chaining promises and functions that return a promise
+ */
+
+let orderCounter = 0;
+
+function parMakeOrder(item) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let orderId = ++orderCounter;
+            console.log(`order placed. item: ${item}`);
+            order = {item: item, orderId: orderId}
+            resolve(order);
+        }, 1000)
     });
+}
+
+function parFulfillOrder(order) {
+    return new Promise((resolve, reject) => {
+        rand = Math.round(Math.random() * 10) + 1;
+        order.status = 'processing';
+        console.log(`rand number was: ${rand}`);
+        if (rand >= 3) {
+            console.log(`order ${order.orderId} was processed right!`);
+            order.status = 'fulfilled';
+            resolve(order);
+        } else {
+            console.log(`couldn't process order: ${order.orderId}`);
+            order.status = 'failed';
+            reject(order);
+        }
+    });
+}
+
+parMakeOrder(`banana`)
+    .then(order => {
+        console.log(`got order back: ${JSON.stringify(order)}`);
+        parFulfillOrder(order)
+            .then(order => {
+                console.log(`fulfilled order: ${JSON.stringify(order)}`);
+            })
+            .catch(order => {
+                console.log(`busted order: ${JSON.stringify(order)}`);
+            });
+    });
+
